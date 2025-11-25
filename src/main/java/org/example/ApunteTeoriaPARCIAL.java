@@ -1,6 +1,6 @@
 package org.example;
 
-public class ApunteTeoria {
+public class ApunteTeoriaPARCIAL {
     //2. import java.util.*;
     //3. class Cereal { }
     //4. public class Flakes extends Cereal {
