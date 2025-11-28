@@ -296,3 +296,135 @@ public class Practica06 {
         }
     }
 }
+
+
+//Ejercicio Práctico 50 puntos
+//La universidad desea implementar un pequeño sistema para registrar encuestas
+//de satisfacción. Cada encuesta debe guardar el nombre de la persona y un
+//puntaje del 1 al 5.
+//Complete los 3 requerimientos en base al código del archivo:
+//https://github.com/facundouferer/CursoDeJava/blob/recuperatorio2025/src/Par
+//ciales/Parcial2025/Recuperatorio/Encuestadora.java
+//Resolución:
+//En la solución debe copiar el programa completo que ha elaborado, indicando
+//también el código del archivo Encuestadora.java.
+//Es importante que coloque todo el documento aquí y no se debe borrar el código
+//que ya se ha desarrollado siendo su código código nuevo.
+//Se Solicita:
+//1. Desarrolle la clase persona
+//2. Desarrolle el método estático registrarEncuesta la cual se debe registrarse con
+//los nombres del encuestado en mayúscula.
+//3. Desarrolle el método estático mostrarResultados
+//Tu respuesta
+package Parciales.Parcial2025.Recuperatorio;
+
+import java.util.Scanner;
+
+// 1. Clase Persona (REQUERIMIENTO 1)
+class Persona {
+    private String nombre;
+
+    public Persona(String nombre) {
+        this.nombre = nombre.toUpperCase(); // nombre siempre en MAYÚSCULAS
+    }
+
+    public String getNombre() {
+        return nombre;
+    }
+
+    public String mostrarInfo() {
+        return "Nombre: " + nombre;
+    }
+}
+
+// Clase Encuesta ya existente
+class Encuesta extends Persona {
+    private int puntaje; // 1 a 5
+
+    public Encuesta(String nombre, int puntaje) {
+        super(nombre);
+        this.puntaje = puntaje;
+    }
+
+    public int getPuntaje() {
+        return puntaje;
+    }
+
+    public void setPuntaje(int puntaje) {
+        this.puntaje = puntaje;
+    }
+
+    @Override
+    public String mostrarInfo() {
+        return super.mostrarInfo() + " - Puntaje: " + puntaje;
+    }
+}
+
+public class Encuestadora {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        Encuesta[] encuestas = new Encuesta[20];
+        int cantidad = 0;
+        int opcion;
+
+        do {
+            System.out.println("\n===== SISTEMA DE ENCUESTAS =====");
+            System.out.println("1. Registrar encuesta");
+            System.out.println("2. Ver resultados");
+            System.out.println("0. Salir");
+            System.out.print("Opcion: ");
+            opcion = Integer.parseInt(sc.nextLine());
+
+            switch (opcion) {
+
+                case 1:
+                    if (cantidad < encuestas.length) {
+                        encuestas[cantidad] = registrarEncuesta(sc); // REQUERIMIENTO 2
+                        cantidad++;
+                    } else {
+                        System.out.println("No hay más espacio disponible.");
+                    }
+                    break;
+
+                case 2:
+                    mostrarResultados(encuestas); // REQUERIMIENTO 3
+                    break;
+
+                case 0:
+                    System.out.println("Saliendo del sistema...");
+                    break;
+
+                default:
+                    System.out.println("Opción inválida.");
+            }
+
+        } while (opcion != 0);
+
+        sc.close();
+    }
+
+    // 2. Método registrarEncuesta (REQUERIMIENTO 2)
+    public static Encuesta registrarEncuesta(Scanner sc) {
+        System.out.print("Ingrese nombre del encuestado: ");
+        String nombre = sc.nextLine();
+
+        System.out.print("Ingrese puntaje (1 a 5): ");
+        int puntaje = Integer.parseInt(sc.nextLine());
+
+        return new Encuesta(nombre, puntaje);
+    }
+
+    // 3. Método mostrarResultados (REQUERIMIENTO 3)
+    public static void mostrarResultados(Encuesta[] encuestas) {
+        System.out.println("\n=== RESULTADOS DE LAS ENCUESTAS ===");
+
+        for (Encuesta e : encuestas) {
+            if (e != null) {
+                System.out.println(e.mostrarInfo());
+            }
+        }
+    }
+}
+
